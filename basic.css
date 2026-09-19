@@ -1,0 +1,117 @@
+/* Общие настройки */
+html {
+  height: 100%;
+}
+body {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: url(img/fonn.jpg) no-repeat center/cover fixed; /* Фоновый рисунок */
+  font-family: 'Open Sans Condensed', sans-serif;
+  color: orange; /* Глобальный цвет текста */
+}
+
+/* Сброс отступов по умолчанию */
+* {
+  box-sizing: border-box;
+}
+
+/* Шапка сайта (меню) */
+#menu {
+  position: fixed; /* Меняем на fixed */
+  top: 0;
+  left: 0;
+  right: 0; /* Растягиваем её на всю ширину */
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  padding: 5px;
+}
+  
+
+#menu li {
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 10px;
+}
+
+/* Стиль для текущей активной страницы */
+#menu li a.active {
+    color: orange; /* Цвет текста для активной ссылки */
+    font-weight: bold;  /* Можно сделать шрифт жирным */
+    pointer-events: none; /* Опционально: полностью отключает клики по активной ссылке */
+}
+
+#menu a {
+  color: white;
+  font-size: 34px;
+  transition: color 0.5s ease-in-out;
+}
+
+#menu .current-page { /* Выделенный пункт меню */
+  font-weight: bold;
+  color: orange;
+}
+
+#menu a:hover {
+  color: orange;
+}
+
+/* Основной контент страницы */
+#content {
+  clear: both;
+  padding-top: calc(70px + 40px);
+  padding-bottom: 10px; /* Это самое главное изменение */
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#content .left { /* Текстовый блок */
+  float: left;
+  width: calc(70% - 80px); /* Ширина блока минус внутренние отступы контейнера #content */
+  font-size: 50px;
+  line-height: 1.4; /* Улучшаем читаемость текста */
+}
+
+#content .right { /* Блок с картинкой */
+  float: right;
+  width: 30%; /* Меньше место для картинки */
+  text-align: center;
+}
+
+#content img {
+  max-width: 70%; /* Картинка никогда не будет шире своего родителя */
+  height: auto;
+  object-fit: contain;
+  border: 2px solid orange;
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+}
+
+/* Подвал */
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0; /* Растягиваем его по всей ширине экрана */
+  text-align: center;
+  color: white;
+ background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Адаптивность для экранов до 800 пикселей */
+@media screen and (max-width: 800px) {
+  #content .left,
+  #content .right_2 {
+    float: none; /* Выключаем "плавание" */
+    width: auto; /* Блоки занимают всю доступную ширину */
+  }
+  
+  #content img {
+    max-width: 90%; /* Оставляем немного места от края блока */
+  }
+  
+  #menu a {
+    font-size: 24px; /* Уменьшим шрифт меню на маленьких экранах */
+  }
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <title>Павел Борисов</title>
+    <meta charset="utf-8">
+    <!-- Подключение вашего CSS-файла -->
+    <link rel="stylesheet" href="basic.css">
+    <!-- Подключение шрифта Open Sans Condensed (если он вам нужен) -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
+  </head>
+  
+  <!-- body — вся видимая часть страницы -->
+  <body>
+    
+<!-- Меню -->
+<ul id="menu">
+  <!-- Элементы меню -->
+  <li><a href="index.html" id="link-home">Главная</a></li>
+  <li><a href="about.html" id="link-about">Обо мне</a></li>
+  <li><a href="contacts.html" id="link-contacts">Контакты</a></li>
+  <li><a href="projects.html" id="link-projects">Разработки</a></li>
+</ul>
+    
+    <!-- Основной контент -->
+    <div id="content">
+      
+      <!-- Левая колонка с текстом -->
+      <div class="left">
+        <!-- paragraph — абзац -->
+        <p></p>
+        <p></p>
+        <p></p>
+
+      </div>
+
+      <!-- Правая колонка для изображения -->
+      <div class="right">
+        <!-- src="img/photo.png" — путь к вашей фотографии в папке img -->
+        <img src="img/photo.png">
+      </div>
+
+    </div>
+
+  <!-- Подвал -->
+  <div id="footer">
+    &copy; Павел Борисов, 2016–2026 г.
+  </div></body>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const paragraphs = [
+        'Добрый день. Я рад приветствовать Вас на моей страничке.',
+        'Здесь вы найдете много интересной и полезной информации.', 
+        'Так же можно бесплатно скачать написанные мной программы.'
+    ];
+
+    let currentParagraphIndex = 0; 
+    let currentLetterIndex = 0;   
+
+    function typeWriter() {
+        if (currentParagraphIndex >= paragraphs.length) return;
+        
+        const paragraphElement = document.querySelector('.left p:nth-child(' + (currentParagraphIndex + 1) + ')');
+
+        if (currentLetterIndex >= paragraphs[currentParagraphIndex].length) {
+            currentParagraphIndex++;
+            currentLetterIndex = 0;
+            setTimeout(typeWriter, 75 * 3); 
+            return;
+        }
+
+        paragraphElement.textContent += paragraphs[currentParagraphIndex][currentLetterIndex++];
+        setTimeout(typeWriter, 40);
+    }
+
+    // --- Логика управления активным состоянием ---
+    
+    const menuLinks = document.querySelectorAll('#menu a');
+    const currentPagePath = window.location.pathname.split('/').pop();
+
+    // Функция, которая снимает класс active со всех ссылок и ставит его на нужную
+    function updateActiveLink(targetHref) {
+        menuLinks.forEach(link => {
+            link.classList.remove('active'); // Убираем активность со всех
+        });
+        
+        // Находим ссылку, которую нажали или которая соответствует текущему URL
+        const activeLink = document.querySelector(`#menu a[href="${targetHref}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active'); // И ставим её единственной активной
+        }
+    }
+
+    // Устанавливаем правильную кнопку активной сразу при загрузке страницы
+    updateActiveLink(currentPagePath);
+
+    // Вешаем обработчик клика
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            const targetPage = this.getAttribute('href');
+
+            if (targetPage === currentPagePath) {
+                event.preventDefault(); 
+                window.getSelection().removeAllRanges(); 
+            } else {
+                // Если переходим на другую страницу, заранее помечаем кнопку активной.
+                // Это создаст мгновенную визуальную реакцию еще до того, как новая страница успеет загрузиться.
+                updateActiveLink(targetPage);
+                // Примечание: При обычном переходе класс сбросится, так как страница перезагрузится.
+                // Он сохранится только если вы перейдете на SPA-модель без перезагрузок.
+            }
+        });
+    });
+
+    typeWriter();
+});
+</script>
+
+  </body>
+</html>
