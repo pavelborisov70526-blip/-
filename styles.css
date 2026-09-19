@@ -1,0 +1,179 @@
+/* Общие настройки */
+@import url("https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300");
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-text: #ffc459; /* Оранжевый цвет текста */
+  --color-bg-dark: #1b1e27; /* Темно-серая подложка */
+  --color-border: rgba(255, 165, 0, 0.3);
+  --font-size-base: 1rem;
+  --line-height: 1.4;
+}
+
+/* Структура документа */
+html,
+body {
+  margin: 0;
+  font-family: "Open Sans Condensed", sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-bg-dark); /* Фон страницы */
+  min-height: 100vh;
+  scroll-behavior: smooth; /* Плавная навигация по меню */
+}
+
+/* Шапка сайта (фиксированная) */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: 1em;
+  text-align: center;
+  letter-spacing: 0.1em;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+#menu li { display: inline-block; margin-right: 1.5em; }
+#menu a.active { color: var(--color-text); }
+.content-offset { height: calc(80px + 1em); } /* Отступ от шапки */
+
+/* Основной контент страницы */
+#content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: calc(80px + 1em); /* Отступ от шапки */
+  padding-bottom: calc(40px + 1em); /* Отступ от подвала */
+  padding-left: 1em;
+  padding-right: 20%; /* УМЕНЬШИЛИ ОТСТУП ДЛЯ КАРТИНКИ ВДВОЕ! */
+  gap: 2em;
+}
+
+.left-content {
+  /* РАСШИРИЛИ ТЕКСТ НА ВСЮ ШИРИНУ */
+  width: auto;
+  max-width: none;
+}
+
+.right-fixed {
+  /* КРУПНЫЙ ПЛАН ФОТОГРАФИИ */
+  position: fixed;
+  inset-inline-end: 1em; /* Правая граница */
+  top: 50%;
+  transform: translateY(-50%); /* Центрирование по вертикали */
+  width: 45%; /* СДЕЛАЛИ БОЛЬШЕ */
+  max-width: 360px; /* МАКСИМАЛЬНОЕ ЗНАЧЕНИЕ */
+  justify-self: end;
+}
+
+.right-fixed img {
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: 3 / 4;
+  border-radius: 10px;
+  box-shadow: 0 0 10px var(--color-border);
+}
+
+/* Подвал */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1em;
+  text-align: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  font-size: 0.9rem;
+}
+
+/* Типографика */
+h1 {
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  line-height: 1.2;
+  margin-bottom: 1em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+.project p {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height);
+}
+
+/* Кнопки */
+button {
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+  border: 2px solid currentColor;
+  background-color: transparent;
+  padding: 0.7em 1.5em;
+  transition: all 0.2s ease-in-out;
+}
+button:hover {
+  background-color: rgba(255, 196, 89, 0.2);
+}
+
+/* Адаптивность */
+@media screen and (max-width: 768px) {
+  .right-fixed {
+    /***
+     * СМЕРТЕЛЬНАЯ КОМБИНАЦИЯ 😈
+     * При ширине экрана < 768px картинка становится полной шириной
+     * и поднимается к верху контента.
+     ***/
+    position: static !important;
+    order: -1;
+    width: 100%;
+    margin-top: 1em;
+  }
+
+  @media only screen and (max-width: 480px) {
+    #content {
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+    }
+  }
+}
+
+/* ВАЖНЫЕ СТИЛИ ИЗ ВАШЕЙ ПРЕДЫДУЩЕЙ РАБОТЫ */
+/* Они отвечают за оформление фона и полосок */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  background-image: url('img/fon.jpg');
+  background-size: cover;
+  opacity: 0.2;
+}
+
+/* Верхняя и нижняя полосы */
+.header::after,
+.footer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background:
+    repeating-linear-gradient(
+      to right,
+      black 0,
+      black 20px,
+      orange 20px,
+      orange 40px
+    );
+  z-index: 1;
+}
+.footer::after {
+  top: unset;
+  bottom: 0;
+}
